@@ -1,0 +1,64 @@
+<aura:component controller="EmployeeController" implements="flexipage:availableForAllPageTypes">
+	<ltng:require styles="/resource/bootstrap" />
+    <aura:attribute name="employeeList" type="Employee__c[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:AddNewEmployeeEvent" action="{!c.handCompEvent}" />
+    
+    <div class="container">
+        <div class="slds-grid slds-wrap">
+            <aura:iteration items="{!v.employeeList}" var="con">
+        	<div class="slds-col slds-size_1-of-3 slds-p-around_small">
+                <div class="card">
+                            <lightning:card footer="{!con.Email__c}" title="{!con.LastName__c}">
+                                <aura:set attribute="actions">
+                                    <lightning:button name="{!con.Id}" label="View" onclick="{!c.showEmployeeDetails}" />
+                                    
+                                    <lightning:button name="{!con.Id}" variant="destructive" onclick="{!c.deleteEmployee}" label="Delete"/>
+                                </aura:set>
+                                <p class="slds-p-horizontal_small">
+                                    {!con.FirstName__c} &nbsp; {!con.LastName__c}
+                                </p>
+                                <p class="slds-p-horizontal_small">
+                                    {!con.Phone__c}
+                                </p>
+                            </lightning:card>
+                    </div>
+                </div>
+                </aura:iteration>
+        </div>
+    </div>
+    
+        <aura:attribute name="uniqueEmployee" type="Employee__c"/>
+    
+    <!-- Modal -->
+    <div id="MyModal" style="display:none;">
+    	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+        <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+        <span class="slds-assistive-text">Close</span>
+        </button>
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Employee Details</h2>
+
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <lightning:input style="display:none;" type="text" value="{!v.uniqueEmployee.Name}" label="Name" />
+            <lightning:input type="text" value="{!v.uniqueEmployee.FirstName__c}" label="First Name" />
+            <lightning:input type="text" value="{!v.uniqueEmployee.LastName__c}" label="Last Name" />
+            <lightning:input type="text" value="{!v.uniqueEmployee.Email__c}" label="Email" />
+            <lightning:input type="text" value="{!v.uniqueEmployee.Salary__c}" label="Salary" />
+            <lightning:input type="text" value="{!v.uniqueEmployee.Department__c}" label="Department" />
+            <lightning:input type="text" value="{!v.uniqueEmployee.Address__c}" label="Address" />
+            <lightning:input type="text" value="{!v.uniqueEmployee.Phone__c}" label="Phone" />
+        </div>
+        <footer class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" onclick="{!c.closeModal}">Close</button>
+        <button class="slds-button slds-button_brand" onclick="{!c.updateEmployee}">Update</button>
+        </footer>
+        </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    
+</aura:component>

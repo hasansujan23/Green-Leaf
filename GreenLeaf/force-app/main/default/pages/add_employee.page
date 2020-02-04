@@ -1,0 +1,24 @@
+<apex:page Controller="NewEmployeeController">
+<apex:form >
+<apex:pageBlock >
+<apex:pageBlockTable value="{!listEmployee}" var="emp">
+<apex:column headerValue="Employee First Name">
+<apex:inputField value="{!emp.FirstName__c}"/>
+</apex:column>
+<apex:column headerValue="Last Name">
+<apex:inputField value="{!emp.LastName__c}"/>
+</apex:column>
+<apex:column headerValue="Email">
+<apex:inputField value="{!emp.Email__c}"/>
+</apex:column>
+<apex:column headerValue="Department">
+<apex:inputField value="{!emp.Department__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+<apex:pageBlockButtons >
+<apex:commandButton value="Add one more Employee" action="{!addEmployee}"/>
+<apex:commandButton value="Save Employee" action="{!saveEmployee}"/>
+</apex:pageBlockButtons>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

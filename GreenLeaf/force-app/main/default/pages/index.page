@@ -1,0 +1,102 @@
+<apex:page Controller="NewEmployeeController" showHeader="false" sidebar="false" standardStylesheets="false"
+            applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" action="{!getAll}">
+
+  <!-- Begin Default Content REMOVE THIS -->
+
+
+<html lang="en">
+  <head>
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    
+  </head>
+  <body>
+    
+        <div class="container">
+            <div class="row">
+                    <apex:repeat value="{!allEmployees}" var="item">
+                        <div class="col-md-3" style="padding:5px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-title">{! item.FirstName__c}&nbsp;&nbsp;{! item.LastName__c}</p>
+                                    <p class="card-text">{! item.Email__c}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <apex:form >
+                                        <apex:commandButton value="Delete" Action="{!deleteEmployee}" reRender="form">
+                                            <apex:param assignTo="{!id}" name="accId" value="{!item.Id}"/>
+                                        </apex:commandButton>
+                                        <apex:commandButton id="editBtn" value="Edit" Action="{!editEmployee}" onclick="display()" reRender="form">
+                                            <apex:param assignTo="{!id}" name="accId" value="{!item.Id}"/>
+                                        </apex:commandButton>
+                                        
+                                    </apex:form>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:repeat>
+            </div>
+        </div>
+        
+        <apex:form >
+                <!-- Modal -->
+                <div class="modal" id="MyModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                      </div>
+                      <div class="modal-body">
+                        <apex:repeat value="{!aEmployees}" var="item">
+                            <p>{!item.FirstName__c}{</P>
+                        </apex:repeat>
+                        <p>{!id}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </apex:form>
+        
+        <script type="text/javascript">
+
+            function display(){
+                var modal = document.getElementById("MyModal");
+                modal.style.display = "block";
+                //alert('Hello');
+            }
+            function closeModal(component,event,handler){
+                var modal = document.getElementById("MyModal");
+                modal.style.display = "none";
+                //alert('Hello');
+            }
+         </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
+  
+  
+  
+  <apex:pageBlock >
+      <apex:pageBlockSection title="First Section">
+      <apex:form >
+       <apex:actionFunction action="{!getAll}" name="CallsubmitLead" reRender="LDB"/>
+                <apex:commandButton value="Search records" action="{!getAll}"/>
+            <apex:pageBlockTable value="{!allEmployees}" var="emp">
+                <apex:column value="{!emp.FirstName__c}"/>
+                <apex:column value="{!emp.LastName__c}"/>
+            </apex:pageBlockTable>
+      </apex:form>
+
+      </apex:pageBlockSection>
+  </apex:pageBlock>
+</apex:page>

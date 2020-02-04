@@ -1,0 +1,33 @@
+<aura:component controller="EmployeeController" implements="flexipage:availableForAllPageTypes">
+    <aura:registerEvent name="AddNewEmployeeEvent" type="c:AddNewEmployeeEvent" />
+    <aura:attribute name="CreateEmployee" type="Employee__c" default="{
+                                                                 sobjectName:'Employee__c',
+                                                                 FirstName__c:'',
+                                                                 LastName__c:'',
+                                                                 Email__c:'',
+                                                                 Salary__c:'',
+                                                                 Department__c:'',
+                                                                 Address__c:'',
+                                                                 Phone__c:''
+                                                                 }" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+            	<lightning:icon class="" iconName="action:new_group" alternativeText="Approved" />
+                <h4 class="text-secondary" style="padding:5px;">Add New Employee Record</h4>
+            </div>
+        	<div class="col-md-12">
+            	<lightning:input type="text" value="{!v.CreateEmployee.FirstName__c}" label="First Name" />
+                <lightning:input type="text" value="{!v.CreateEmployee.LastName__c}" label="Last Name" />
+                <lightning:input type="email" value="{!v.CreateEmployee.Email__c}" label="Email" />
+                <lightning:input type="text" value="{!v.CreateEmployee.Salary__c}" label="Salary" />
+                <lightning:input type="text" value="{!v.CreateEmployee.Department__c}" label="Department" />
+                <lightning:input type="text" value="{!v.CreateEmployee.Address__c}" label="Address" />
+                <lightning:input type="phone" value="{!v.CreateEmployee.Phone__c}" label="Phone" />
+            </div>
+        <div class="col-md-12">
+        	<lightning:button class="mt-2 btn btn-success" label="Save" onclick="{!c.doSave}" />
+        </div>
+        </div> 
+    </div>
+</aura:component>
